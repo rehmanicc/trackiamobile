@@ -19,7 +19,6 @@ export default function DeviceCarousel({ devices = [], liveDevices = {}, onPress
   };
   return (
     <View style={styles.carouselWrapper}>
-<<<<<<< HEAD
       <FlatList
         horizontal
         data={devices}
@@ -32,9 +31,6 @@ export default function DeviceCarousel({ devices = [], liveDevices = {}, onPress
         maxToRenderPerBatch={8}
         windowSize={5}
       />
-=======
-      <FlatList horizontal data={devices} renderItem={renderItem} keyExtractor={(item) => item._id} showsHorizontalScrollIndicator={false} removeClippedSubviews initialNumToRender={8} maxToRenderPerBatch={8} windowSize={5} />
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
     </View>
   );
 }

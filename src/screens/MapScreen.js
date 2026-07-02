@@ -1,12 +1,7 @@
 // src/screens/MapScreen.js
-<<<<<<< HEAD
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, ScrollView, TouchableOpacity, Text, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-=======
-import React, { useEffect, useRef, useState } from 'react';
-import { View, ScrollView, TouchableOpacity, Text, Alert } from 'react-native';
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 import MapView, { Circle, Polygon, Marker } from 'react-native-maps';
 import Slider from '@react-native-community/slider';
 import { useAuth } from '../contexts/AuthContext';
@@ -53,7 +48,6 @@ export default function MapScreen() {
     handleMapPress,
   } = geofence;
 
-<<<<<<< HEAD
   const animateToDevice = (coord, duration = 400) => {
     if (!coord) return;
     mapRef.current?.animateCamera({ center: coord, zoom: 15.2, pitch: 45 }, { duration });
@@ -87,49 +81,16 @@ export default function MapScreen() {
 
   const selectedLiveDevice = liveDevices[String(selectedDeviceId)];
 
-  // FOLLOW DEVICE – NO THROTTLE, SMOOTH 400MS ANIMATION
-=======
-  const animateToDevice = (coord, duration = 800) => {
-    if (!coord) return;
-    mapRef.current?.animateCamera({ center: coord, zoom: 15.2 }, { duration });
-  };
-
-  useEffect(() => {
-    const loadDevices = async () => {
-      try {
-        const res = await fetchDevices();
-        setDevices(res.data || []);
-      } catch (err) {
-        console.log('❌ LOAD DEVICES ERROR:', err.message);
-      }
-    };
-    loadDevices();
-  }, []);
-
-  const selectedLiveDevice = liveDevices[String(selectedDeviceId)];
-  const lastCameraUpdate = useRef(0);
-
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+  // Follow device – no throttle, smooth 400ms animation
   useEffect(() => {
     if (!followDevice || !selectedDeviceId) return;
     const device = selectedLiveDevice;
     if (!device) return;
     const coord = device.renderedCoordinate;
     if (!coord) return;
-<<<<<<< HEAD
 
-    // Immediately center the camera with a smooth animation
     mapRef.current?.animateCamera({ center: coord, zoom: 15.2, pitch: 45 }, { duration: 400 });
   }, [selectedLiveDevice?.renderedCoordinate?.latitude, selectedLiveDevice?.renderedCoordinate?.longitude, followDevice, selectedDeviceId]);
-=======
-    const speed = (device?.position?.speed || 0) * 3.6;
-    if (speed < 5) return;
-    const now = Date.now();
-    if (now - lastCameraUpdate.current < 1400) return;
-    lastCameraUpdate.current = now;
-    mapRef.current?.animateCamera({ center: coord }, { duration: 1400 });
-  }, [selectedDeviceId, selectedLiveDevice]);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 
   const focusDevice = (deviceId) => {
     const dev = liveDevices[String(deviceId)];
@@ -138,11 +99,7 @@ export default function MapScreen() {
     if (!coord) return;
     setSelectedDeviceId(deviceId);
     setFollowDevice(true);
-<<<<<<< HEAD
     mapRef.current?.animateCamera({ center: coord, zoom: 16, pitch: 45 }, { duration: 400 });
-=======
-    mapRef.current?.animateCamera({ center: coord, zoom: 16 }, { duration: 900 });
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   };
 
   const refreshMap = () => {
@@ -156,10 +113,6 @@ export default function MapScreen() {
     }
     try {
       await setCallGeofence(selectedDeviceId, geofenceId);
-<<<<<<< HEAD
-=======
-      // Reload geofences to update call badge
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       const res = await fetchGeofences(selectedDeviceId);
       setGeofences(res.data?.geofences || []);
       setDeviceMeta({

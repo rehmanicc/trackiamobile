@@ -60,12 +60,6 @@ export default function usePlayback({ history, mapRef }) {
       const currentSpeed = toKmh(end?.speed || 0);
       const isStopped = currentSpeed < 1;
 
-<<<<<<< HEAD
-=======
-      // Parked detection logic (simplified - keep your existing logic)
-      // ...
-
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       const startLat = start.latitude;
       const startLng = start.longitude;
       const endLat = end.latitude;
@@ -73,45 +67,30 @@ export default function usePlayback({ history, mapRef }) {
       let targetHeading = getRotation(start, end);
 
       const realGap = new Date(end.deviceTime) - new Date(start.deviceTime);
-<<<<<<< HEAD
-      
-      // ==============================================
-      // 🔥 NEW: Skip long parked periods instantly
-      // ==============================================
+
       let duration;
       if (isStopped) {
         if (realGap > 30000) {
           duration = 0;
         } else {
-          // Otherwise use a short duration (150ms)
           duration = 150;
         }
       } else {
-        // Moving: compute duration based on speed and gap
         duration = Math.max(300, Math.min(realGap / (12 * speed), 1400));
       }
 
-      // If duration is 0, we instantly teleport to the end position
       if (duration === 0) {
-        // Snap directly to the end position
         interpolatedCoordRef.current = { latitude: endLat, longitude: endLng };
         headingRef.current = targetHeading;
         markerRotationRef.current = targetHeading;
         setInterpolatedCoord(interpolatedCoordRef.current);
         setMarkerRotation(markerRotationRef.current);
-        // Move to next index immediately
         currentIndex++;
         setPlaybackIndex(currentIndex);
-        // Continue to next segment
         animateSegment();
         return;
       }
 
-      // Normal animation for moving segments
-=======
-      let duration = currentSpeed < 1 ? 150 : Math.max(300, Math.min(realGap / (12 * speed), 1400));
-
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       segmentStartTimeRef.current = performance.now();
 
       const step = (now) => {

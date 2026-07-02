@@ -10,7 +10,7 @@ import { PERMISSIONS } from "../constants/permissions";
 import styles from "../styles/userStyles";
 
 export default function DeviceScreen() {
-  const api = null; // not needed anymore, using direct imports
+  const api = null;
   const navigation = useNavigation();
   const { user: currentUser } = useAuth();
   const [devices, setDevices] = useState([]);

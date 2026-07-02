@@ -6,23 +6,16 @@ import dashboardStyles from "../../styles/dashboardStyles";
 
 const getAlertColor = (type) => {
   switch (type) {
-<<<<<<< HEAD
     case "BATTERY_DISCONNECTED":
-      return "#F44336"; // Red
+      return "#F44336";
     case "GEOFENCE_EXIT":
-      return "#FF9800"; // Orange
+      return "#FF9800";
     case "DEVICE_EXPIRY":
-      return "#EF4444"; // Red
+      return "#EF4444";
     case "CALL_REQUIRED":
-      return "#FF6B00"; // Dark Orange (specific for call alerts)
+      return "#FF6B00";
     default:
-      return "#EF4444"; // Fallback red
-=======
-    case "BATTERY_DISCONNECTED": return "#F44336";
-    case "GEOFENCE_EXIT": return "#FF9800";
-    case "DEVICE_EXPIRY": return "#EF4444";
-    default: return "#EF4444";
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+      return "#EF4444";
   }
 };
 
@@ -42,7 +35,6 @@ const RecentAlertsCard = ({ alerts = [], onPressAlert }) => {
             activeOpacity={0.85}
             onPress={() => onPressAlert?.(alert)}
           >
-<<<<<<< HEAD
             <View
               style={[
                 dashboardStyles.alertIconContainer,
@@ -72,20 +64,6 @@ const RecentAlertsCard = ({ alerts = [], onPressAlert }) => {
             <Text style={dashboardStyles.alertTime}>
               {getTimeAgo(alert.timestamp || alert.createdAt)}
             </Text>
-=======
-            <View style={[dashboardStyles.alertIconContainer, { backgroundColor: getAlertColor(alert.type) }]}>
-              <MaterialCommunityIcons name="bell-alert-outline" size={18} color="#FFFFFF" />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={dashboardStyles.alertDevice} numberOfLines={1}>
-                {alert.device?.registrationNumber || alert.device?.name || "Vehicle"}
-              </Text>
-              <Text style={dashboardStyles.alertType} numberOfLines={1}>
-                {alert.message || alert.type}
-              </Text>
-            </View>
-            <Text style={dashboardStyles.alertTime}>{getTimeAgo(alert.timestamp || alert.createdAt)}</Text>
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
           </TouchableOpacity>
         ))
       )}

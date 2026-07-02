@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-=======
-import React, { useCallback, useEffect, useState } from "react";
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 import { View, Text, ScrollView, RefreshControl, ActivityIndicator, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAuth } from "../contexts/AuthContext";
@@ -33,13 +29,12 @@ export default function DashboardScreen() {
     stoppedVehicles: realtimeDevices.filter(d => (d?.position?.speed || 0) * 3.6 <= 5).length,
   };
 
-<<<<<<< HEAD
-  // ✅ Add "CALL_REQUIRED" to critical alerts filter
+  // Add "CALL_REQUIRED" to critical alerts filter
   const mergedCriticalAlerts = (realtimeAlerts || []).filter(a =>
     ["BATTERY_DISCONNECTED", "GEOFENCE_EXIT", "DEVICE_EXPIRY", "CALL_REQUIRED"].includes(a.type)
   );
 
-  // ✅ Sort and limit to latest 5 critical alerts
+  // Sort and limit to latest 5 critical alerts
   const criticalAlertsToShow = useMemo(() => {
     const alerts = mergedCriticalAlerts.length > 0 ? mergedCriticalAlerts : criticalAlerts;
     return alerts
@@ -48,12 +43,6 @@ export default function DashboardScreen() {
       .slice(0, 5);
   }, [mergedCriticalAlerts, criticalAlerts]);
 
-=======
-  const mergedCriticalAlerts = (realtimeAlerts || []).filter(a =>
-    ["BATTERY_DISCONNECTED", "GEOFENCE_EXIT", "DEVICE_EXPIRY"].includes(a.type)
-  );
-
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   const fetchDashboardStats = async () => {
     try {
       const res = await getDashboardStats();
@@ -115,11 +104,7 @@ export default function DashboardScreen() {
 
       <VehiclePieChart moving={Number(realtimeStats.movingVehicles || 0)} stopped={Number(realtimeStats.stoppedVehicles || 0)} expired={Number(stats.expiredVehicles || 0)} />
 
-<<<<<<< HEAD
       <RecentAlertsCard alerts={criticalAlertsToShow} />
-=======
-      <RecentAlertsCard alerts={mergedCriticalAlerts.length ? mergedCriticalAlerts : criticalAlerts} />
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 
       <View style={dashboardStyles.quickActionsCard}>
         <Text style={dashboardStyles.quickActionsTitle}>Quick Actions</Text>

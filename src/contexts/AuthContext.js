@@ -2,12 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login as loginApi, saveFcmToken } from '../api/auth';
 import { registerForPushNotificationsAsync } from '../services/notificationService';
-<<<<<<< HEAD
 import { setAuthToken } from '../api/client';
 import { appEvents } from '../utils/events';
-=======
-import api, { setAuthToken } from '../api/client';
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 
 const AuthContext = createContext(null);
 
@@ -16,15 +12,10 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-<<<<<<< HEAD
-  // Load saved auth on app start
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   useEffect(() => {
     loadAuth();
   }, []);
 
-<<<<<<< HEAD
   // Listen for 401 events from API interceptor
   useEffect(() => {
     const handleUnauthorized = () => {
@@ -37,8 +28,6 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   const loadAuth = async () => {
     try {
       const savedUser = await AsyncStorage.getItem('user');
@@ -46,11 +35,7 @@ export const AuthProvider = ({ children }) => {
       if (savedUser && savedToken) {
         setUser(JSON.parse(savedUser));
         setToken(savedToken);
-<<<<<<< HEAD
         setAuthToken(savedToken);
-=======
-        setAuthToken(savedToken);  // ✅ Restore token to apiClient cache
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       }
     } catch (err) {
       console.log('❌ Load auth error:', err.message);
@@ -66,18 +51,10 @@ export const AuthProvider = ({ children }) => {
 
       setUser(userData);
       setToken(authToken);
-<<<<<<< HEAD
       setAuthToken(authToken);
 
       await AsyncStorage.setItem('user', JSON.stringify(userData));
-=======
-      setAuthToken(authToken);  // ✅ Save to both AsyncStorage and apiClient cache
 
-      await AsyncStorage.setItem('user', JSON.stringify(userData));
-      // No need to manually set token – setAuthToken already does it
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
-
-      // Register FCM token
       const pushToken = await registerForPushNotificationsAsync();
       if (pushToken) {
         await saveFcmToken(pushToken);
@@ -93,14 +70,8 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setUser(null);
     setToken(null);
-<<<<<<< HEAD
     setAuthToken(null);
     await AsyncStorage.removeItem('user');
-=======
-    setAuthToken(null);  // ✅ Clear token from apiClient cache
-    await AsyncStorage.removeItem('user');
-    // token removal is handled by setAuthToken
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   };
 
   return (

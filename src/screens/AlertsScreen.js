@@ -1,9 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-<<<<<<< HEAD
 import { View, Text, FlatList, TouchableOpacity, RefreshControl, Linking } from "react-native";
-=======
-import { View, Text, FlatList, TouchableOpacity, RefreshControl } from "react-native";
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 import { fetchAlerts, markAlertRead, deleteAlert } from "../api/alerts";
 import { useRealtime } from "../contexts/RealtimeContext";
 import { getTimeAgo } from "../utils/date";
@@ -68,11 +64,7 @@ export default function AlertsScreen() {
     }
   };
 
-<<<<<<< HEAD
   const mergedAlerts = useMemo(() => {
-=======
-   const mergedAlerts = useMemo(() => {
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
     const map = new Map();
     realtimeAlerts.forEach((a) => map.set(a._id, a));
     historicalAlerts.forEach((a) => { if (!map.has(a._id)) map.set(a._id, a); });
@@ -88,30 +80,16 @@ export default function AlertsScreen() {
         );
 
     return alerts.sort((a, b) => {
-<<<<<<< HEAD
       if (a.read !== b.read) {
         return a.read ? 1 : -1;
       }
       return new Date(b.timestamp) - new Date(a.timestamp);
-=======
-      // unread first
-      if (a.read !== b.read) {
-        return a.read ? 1 : -1;
-      }
-
-      // newest first
-      return (
-        new Date(b.timestamp) -
-        new Date(a.timestamp)
-      );
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
     });
   }, [mergedAlerts, filter]);
 
   const unreadCount = useMemo(() => mergedAlerts.filter((a) => !a.read).length, [mergedAlerts]);
 
   const getPriorityStyle = (isCritical) => (isCritical ? styles.highCard : styles.lowCard);
-<<<<<<< HEAD
   const isSelected = (id) => selectedAlerts.includes(id);
 
   const handleMarkSelectedRead = async () => {
@@ -121,31 +99,11 @@ export default function AlertsScreen() {
       fetchAlertsList();
     } catch (err) {
       console.log("❌ MARK SELECTED READ:", err.response?.data || err.message);
-=======
-  const isSelected = (id) =>
-    selectedAlerts.includes(id);
-  const handleMarkSelectedRead = async () => {
-    try {
-      await Promise.all(
-        selectedAlerts.map(id => markAlertRead(id))
-      );
-
-      
-
-      setSelectedAlerts([]);
-      fetchAlertsList();
-    } catch (err) {
-      console.log(
-        "❌ MARK SELECTED READ:",
-        err.response?.data || err.message
-      );
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
     }
   };
 
   const handleDeleteSelected = async () => {
     try {
-<<<<<<< HEAD
       await Promise.all(selectedAlerts.map(id => deleteAlert(id)));
       setSelectedAlerts([]);
       fetchAlertsList();
@@ -154,9 +112,7 @@ export default function AlertsScreen() {
     }
   };
 
-  // ------------------------------------------------------------------
-  // ✅ RENDER ALERT MESSAGE WITH TAPPABLE PHONE NUMBER
-  // ------------------------------------------------------------------
+  // Render alert message with tappable phone number
   const renderAlertMessage = (item) => {
     if (item.type === 'CALL_REQUIRED' && item.metadata?.phoneNumber) {
       const phoneNumber = item.metadata.phoneNumber;
@@ -178,21 +134,6 @@ export default function AlertsScreen() {
       );
     }
     return <Text style={styles.alertMessage}>{item.message}</Text>;
-=======
-      await Promise.all(
-        selectedAlerts.map(id => deleteAlert(id))
-      );
-
-
-      setSelectedAlerts([]);
-      fetchAlertsList();
-    } catch (err) {
-      console.log(
-        "❌ DELETE SELECTED:",
-        err.response?.data || err.message
-      );
-    }
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   };
 
   return (
@@ -269,10 +210,6 @@ export default function AlertsScreen() {
                 );
                 return;
               }
-<<<<<<< HEAD
-=======
-
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
               if (!item.read) {
                 markRead(item._id);
               }
@@ -298,12 +235,7 @@ export default function AlertsScreen() {
                   <Text style={styles.icon}>{ICONS[item.type] || "🚨"}</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.alertType}>{item.type?.replace(/_/g, " ")}</Text>
-<<<<<<< HEAD
-                    {/* ✅ Use renderAlertMessage instead of static text */}
                     {renderAlertMessage(item)}
-=======
-                    <Text style={styles.alertMessage}>{item.message}</Text>
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
                   </View>
                 </View>
                 {!item.read && <View style={styles.unreadDot} />}

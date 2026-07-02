@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-=======
-// src/screens/SettingsScreen.js
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 import { View, Text, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { updateUser } from "../api/users";
-<<<<<<< HEAD
-import { changePassword } from "../api/auth"; // ✅ new import
-=======
-import { fetchCurrentUser, updateUserAlertPreferences } from "../api/users"; // for alert prefs
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+import { changePassword } from "../api/auth";
 import AlertPreferencesPanel from "../components/settings/AlertPreferencesPanel";
 import settingsStyles from "../styles/settingsStyles";
 import api from "../api/client";
@@ -21,10 +13,7 @@ export default function SettingsScreen() {
   const isAdmin = user?.role === "platform_owner" || user?.role === "admin";
   const [editing, setEditing] = useState(false);
   const [activeSection, setActiveSection] = useState("contact");
-<<<<<<< HEAD
-  const [currentPassword, setCurrentPassword] = useState("");   // ✅ new state
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [contactInfo, setContactInfo] = useState({ phone: "", email: "", website: "", address: "" });
@@ -47,11 +36,7 @@ export default function SettingsScreen() {
 
   const handleSaveContact = async () => {
     try {
-<<<<<<< HEAD
       await api.put("/settings/contact", contactInfo);
-=======
-     await api.put("/settings/contact", contactInfo);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       setEditing(false);
       Alert.alert("Success", "Contact information updated");
     } catch (err) {
@@ -60,8 +45,6 @@ export default function SettingsScreen() {
     }
   };
 
-<<<<<<< HEAD
-  // ✅ Updated password change handler using dedicated endpoint
   const handleChangePassword = async () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
       return Alert.alert("Error", "All fields are required");
@@ -73,15 +56,6 @@ export default function SettingsScreen() {
       await changePassword(currentPassword, newPassword);
       Alert.alert("Success", "Password updated successfully");
       setCurrentPassword("");
-=======
-  const handleChangePassword = async () => {
-    if (!newPassword || !confirmPassword) return Alert.alert("Error", "All fields required");
-    if (newPassword !== confirmPassword) return Alert.alert("Error", "Passwords do not match");
-    try {
-      // ✅ FIXED: Use updateUser endpoint to change password
-      await updateUser(user._id, { password: newPassword });
-      Alert.alert("Success", "Password updated successfully");
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       setNewPassword("");
       setConfirmPassword("");
       setActiveSection("contact");
@@ -114,7 +88,6 @@ export default function SettingsScreen() {
           </View>
 
           <View style={settingsStyles.topButtons}>
-<<<<<<< HEAD
             <TouchableOpacity
               style={[settingsStyles.topButton, activeSection === "alerts" && settingsStyles.topButtonActive]}
               onPress={() => setActiveSection("alerts")}
@@ -140,21 +113,6 @@ export default function SettingsScreen() {
               style={[settingsStyles.topButton, activeSection === "password" && settingsStyles.topButtonActive]}
               onPress={() => setActiveSection("password")}
             >
-=======
-            <TouchableOpacity style={[settingsStyles.topButton, activeSection === "alerts" && settingsStyles.topButtonActive]} onPress={() => setActiveSection("alerts")}>
-              <Ionicons name="notifications-outline" size={18} color="#fff" />
-              <Text style={settingsStyles.topButtonText}>Alerts</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[settingsStyles.topButton, activeSection === "contact" && settingsStyles.topButtonActive]} onPress={() => setActiveSection("contact")}>
-              <Ionicons name="call-outline" size={18} color="#fff" />
-              <Text style={settingsStyles.topButtonText}>Contact</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[settingsStyles.topButton, activeSection === "faq" && settingsStyles.topButtonActive]} onPress={() => setActiveSection("faq")}>
-              <Ionicons name="help-circle-outline" size={18} color="#fff" />
-              <Text style={settingsStyles.topButtonText}>FAQs</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[settingsStyles.topButton, activeSection === "password" && settingsStyles.topButtonActive]} onPress={() => setActiveSection("password")}>
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
               <Ionicons name="lock-closed-outline" size={18} color="#fff" />
               <Text style={settingsStyles.topButtonText}>Password</Text>
             </TouchableOpacity>
@@ -166,15 +124,11 @@ export default function SettingsScreen() {
             <View style={settingsStyles.card}>
               <View style={settingsStyles.cardHeader}>
                 <Text style={settingsStyles.cardTitle}>Contact Information</Text>
-<<<<<<< HEAD
                 {isAdmin && !editing && (
                   <TouchableOpacity onPress={() => setEditing(true)}>
                     <Text style={settingsStyles.editText}>Edit</Text>
                   </TouchableOpacity>
                 )}
-=======
-                {isAdmin && !editing && <TouchableOpacity onPress={() => setEditing(true)}><Text style={settingsStyles.editText}>Edit</Text></TouchableOpacity>}
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
               </View>
               {[
                 ["Phone", "phone", "📞"],
@@ -185,15 +139,11 @@ export default function SettingsScreen() {
                 <View key={key}>
                   <Text style={settingsStyles.label}>{label}</Text>
                   {editing ? (
-<<<<<<< HEAD
                     <TextInput
                       value={contactInfo[key]}
                       onChangeText={v => handleChange(key, v)}
                       style={settingsStyles.input}
                     />
-=======
-                    <TextInput value={contactInfo[key]} onChangeText={v => handleChange(key, v)} style={settingsStyles.input} />
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
                   ) : (
                     <View style={settingsStyles.valueBox}>
                       <Text style={settingsStyles.valueText}>{icon} {contactInfo[key]}</Text>
@@ -201,24 +151,18 @@ export default function SettingsScreen() {
                   )}
                 </View>
               ))}
-<<<<<<< HEAD
               {editing && (
                 <TouchableOpacity style={settingsStyles.saveButton} onPress={handleSaveContact}>
                   <Text style={settingsStyles.saveButtonText}>Save Changes</Text>
                 </TouchableOpacity>
               )}
-=======
-              {editing && <TouchableOpacity style={settingsStyles.saveButton} onPress={handleSaveContact}><Text style={settingsStyles.saveButtonText}>Save Changes</Text></TouchableOpacity>}
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
             </View>
           )}
 
           {activeSection === "password" && (
             <View style={settingsStyles.card}>
               <Text style={settingsStyles.cardTitle}>Change Password</Text>
-<<<<<<< HEAD
 
-              {/* ✅ Current Password field added */}
               <Text style={settingsStyles.label}>Current Password</Text>
               <TextInput
                 secureTextEntry
@@ -252,13 +196,6 @@ export default function SettingsScreen() {
               <TouchableOpacity style={settingsStyles.saveButton} onPress={handleChangePassword}>
                 <Text style={settingsStyles.saveButtonText}>Update Password</Text>
               </TouchableOpacity>
-=======
-              <Text style={settingsStyles.label}>New Password</Text>
-              <TextInput secureTextEntry value={newPassword} onChangeText={setNewPassword} style={settingsStyles.input} placeholder="Enter new password" placeholderTextColor="#999" />
-              <Text style={settingsStyles.label}>Confirm Password</Text>
-              <TextInput secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} style={settingsStyles.input} placeholder="Confirm password" placeholderTextColor="#999" />
-              <TouchableOpacity style={settingsStyles.saveButton} onPress={handleChangePassword}><Text style={settingsStyles.saveButtonText}>Update Password</Text></TouchableOpacity>
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
             </View>
           )}
 

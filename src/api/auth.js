@@ -12,17 +12,8 @@ export const createUser = (userData) =>
 export const getCurrentUser = () =>
   api.get('/auth/me');
 
-<<<<<<< HEAD
-
 export const saveFcmToken = (token) =>
   api.post('/fcm/save-token', { token });
 
 export const changePassword = (currentPassword, newPassword) =>
   api.post('/auth/change-password', { currentPassword, newPassword });
-=======
-export const saveFcmToken = (token) =>
-  api.post('/auth/fcm-token', { token });
-
-export const changePassword = (userId, newPassword) =>
-  api.put(`/users/${userId}`, { password: newPassword });
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec

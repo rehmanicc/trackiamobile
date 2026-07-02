@@ -6,10 +6,7 @@ export const ALERT_TYPES = {
   GEOFENCE_EXIT: 'GEOFENCE_EXIT',
   BATTERY_DISCONNECTED: 'BATTERY_DISCONNECTED',
   DEVICE_EXPIRY: 'DEVICE_EXPIRY',
-<<<<<<< HEAD
   CALL_REQUIRED: 'CALL_REQUIRED',  // ✅ added
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 };
 
 export const ALERT_LABELS = {
@@ -20,10 +17,7 @@ export const ALERT_LABELS = {
   [ALERT_TYPES.GEOFENCE_EXIT]: 'Geofence Exit',
   [ALERT_TYPES.BATTERY_DISCONNECTED]: 'Battery Disconnected',
   [ALERT_TYPES.DEVICE_EXPIRY]: 'Device Expiry',
-<<<<<<< HEAD
   [ALERT_TYPES.CALL_REQUIRED]: 'Call Required',  // ✅ added
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 };
 
 export const ALERT_ICONS = {
@@ -34,20 +28,14 @@ export const ALERT_ICONS = {
   [ALERT_TYPES.GEOFENCE_EXIT]: '📌',
   [ALERT_TYPES.BATTERY_DISCONNECTED]: '🔋',
   [ALERT_TYPES.DEVICE_EXPIRY]: '⏰',
-<<<<<<< HEAD
-  [ALERT_TYPES.CALL_REQUIRED]: '📞', 
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+  [ALERT_TYPES.CALL_REQUIRED]: '📞',
 };
 
 export const CRITICAL_ALERT_TYPES = [
   ALERT_TYPES.BATTERY_DISCONNECTED,
   ALERT_TYPES.GEOFENCE_EXIT,
   ALERT_TYPES.DEVICE_EXPIRY,
-<<<<<<< HEAD
-  ALERT_TYPES.CALL_REQUIRED, 
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+  ALERT_TYPES.CALL_REQUIRED,
 ];
 
 export const isCriticalAlert = (type) => CRITICAL_ALERT_TYPES.includes(type);

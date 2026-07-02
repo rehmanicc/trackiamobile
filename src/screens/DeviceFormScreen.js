@@ -2,11 +2,7 @@
 import { useState, useEffect } from "react";
 import {
   View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView,
-<<<<<<< HEAD
   Platform, Alert, TextInput, Switch
-=======
-  Platform, Alert, TextInput
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useAuth } from "../contexts/AuthContext";
@@ -41,15 +37,8 @@ export default function DeviceFormScreen() {
     name: "", uniqueId: "", registrationNumber: "", trackerSimNo: "",
     speedLimit: "", fuelEfficiency: "", oilChangeReading: "", oilChangeLimit: "", callReceiverNumber: "",
   });
-<<<<<<< HEAD
   const [callEnabled, setCallEnabled] = useState(true);
 
-=======
-
-  // ------------------------------------------------------------------
-  // Helper: extract admin ID as string
-  // ------------------------------------------------------------------
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   const getAdminIdString = (adminField) => {
     if (!adminField) return null;
     if (typeof adminField === 'string') return adminField;
@@ -57,19 +46,9 @@ export default function DeviceFormScreen() {
     return String(adminField);
   };
 
-<<<<<<< HEAD
   useEffect(() => {
     const loadData = async () => {
       try {
-=======
-  // ------------------------------------------------------------------
-  // Load all required data in parallel (admins + device data if editing)
-  // ------------------------------------------------------------------
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        // 1. Load admins (if platform_owner)
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
         let adminList = [];
         if (currentUser?.role === "platform_owner") {
           const usersRes = await fetchUsers();
@@ -77,10 +56,6 @@ export default function DeviceFormScreen() {
           setAdmins(adminList);
         }
 
-<<<<<<< HEAD
-=======
-        // 2. Load device fresh data if editing
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
         let freshDevice = device;
         let adminIdFromDevice = null;
         let trackerIdFromDevice = null;
@@ -90,10 +65,6 @@ export default function DeviceFormScreen() {
           adminIdFromDevice = getAdminIdString(freshDevice.adminId);
           trackerIdFromDevice = freshDevice.trackerModelId?._id || freshDevice.trackerModelId || null;
 
-<<<<<<< HEAD
-=======
-          // Populate form
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
           setForm({
             name: freshDevice.name || "",
             uniqueId: freshDevice.uniqueId || "",
@@ -106,13 +77,8 @@ export default function DeviceFormScreen() {
             callReceiverNumber: freshDevice.callReceiverNumber || "",
           });
           setSelectedTrackerModelId(trackerIdFromDevice);
-<<<<<<< HEAD
           setCallEnabled(freshDevice.callEnabled !== undefined ? freshDevice.callEnabled : true);
         } else if (device && !isEdit) {
-=======
-        } else if (device && !isEdit) {
-          // Pre‑populate for new device (e.g., copy)
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
           adminIdFromDevice = getAdminIdString(device.adminId);
           trackerIdFromDevice = device.trackerModelId?._id || device.trackerModelId || null;
           setForm({
@@ -127,15 +93,9 @@ export default function DeviceFormScreen() {
             callReceiverNumber: device.callReceiverNumber || "",
           });
           setSelectedTrackerModelId(trackerIdFromDevice);
-<<<<<<< HEAD
           setCallEnabled(true);
         }
 
-=======
-        }
-
-        // 3. Set selectedAdminId – but only if it exists in the admin list (or if no admins list, set anyway)
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
         if (adminIdFromDevice) {
           if (adminList.length > 0) {
             const exists = adminList.some(adm => String(adm._id) === String(adminIdFromDevice));
@@ -146,10 +106,6 @@ export default function DeviceFormScreen() {
               setSelectedAdminId(null);
             }
           } else {
-<<<<<<< HEAD
-=======
-            // No admins list (e.g., current user is not platform_owner) – still set the ID
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
             setSelectedAdminId(adminIdFromDevice);
           }
         } else {
@@ -157,10 +113,6 @@ export default function DeviceFormScreen() {
         }
       } catch (err) {
         console.log("❌ Error loading data:", err);
-<<<<<<< HEAD
-=======
-        // Fallback: use passed device object
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
         if (device) {
           setForm({
             name: device.name || "",
@@ -175,10 +127,7 @@ export default function DeviceFormScreen() {
           });
           setSelectedTrackerModelId(device.trackerModelId?._id || device.trackerModelId || null);
           setSelectedAdminId(getAdminIdString(device.adminId));
-<<<<<<< HEAD
           setCallEnabled(device.callEnabled !== undefined ? device.callEnabled : true);
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
         }
       } finally {
         setLoadingData(false);
@@ -188,10 +137,6 @@ export default function DeviceFormScreen() {
     loadData();
   }, [isEdit, device?._id, currentUser]);
 
-<<<<<<< HEAD
-=======
-  // Load tracker models (independent, can be done in parallel but we already have loadingData)
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   useEffect(() => {
     const loadTrackers = async () => {
       try {
@@ -233,10 +178,7 @@ export default function DeviceFormScreen() {
         oilChangeReading: Number(form.oilChangeReading),
         oilChangeLimit: Number(form.oilChangeLimit),
         callReceiverNumber: form.callReceiverNumber,
-<<<<<<< HEAD
         callEnabled: callEnabled,
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       };
       if (isAdminUser) {
         Object.assign(payload, {
@@ -324,9 +266,8 @@ export default function DeviceFormScreen() {
 
             <FormField label="Registration Number" value={form.registrationNumber} onChange={(v) => handleChange("registrationNumber", v)} placeholder="AUS 403" error={errors.registrationNumber} />
             <FormField label="Tracker SIM No (Optional)" value={form.trackerSimNo} onChange={(v) => handleChange("trackerSimNo", v)} placeholder="Optional" editable={canEditTrackerSim} />
-<<<<<<< HEAD
-            
-            {/* ✅ Call Service Toggle moved here – admin-only */}
+
+            {/* Call Service Toggle – admin-only */}
             <View style={{ marginTop: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
               <Text style={styles.label}>Enable Call Service</Text>
               <Switch
@@ -338,8 +279,6 @@ export default function DeviceFormScreen() {
             <Text style={{ fontSize: 12, color: '#64748B', marginTop: 2, marginBottom: 8 }}>
               When enabled, exiting the call geofence will send a call alert.
             </Text>
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
           </View>
         )}
 

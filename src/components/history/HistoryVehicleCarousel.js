@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 // src/components/history/HistoryVehicleCarousel.js
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 import React from "react";
 import { View, ScrollView } from "react-native";
 import VehicleCard from "../common/VehicleCard";
 
-<<<<<<< HEAD
 function HistoryVehicleCarousel({
   styles,
   devices,
@@ -40,21 +36,6 @@ function HistoryVehicleCarousel({
             />
           );
         })}
-=======
-function HistoryVehicleCarousel({ styles, devices, selectedDeviceId, setSelectedDeviceId }) {
-  return (
-    <View style={styles.carouselWrapper}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {Object.entries(devices || {}).map(([id, dev]) => (
-          <VehicleCard
-            key={id}
-            id={id}
-            dev={dev}
-            isSelected={selectedDeviceId == id}
-            onPress={() => setSelectedDeviceId(id)}
-          />
-        ))}
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       </ScrollView>
     </View>
   );

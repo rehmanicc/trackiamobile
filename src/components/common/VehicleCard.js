@@ -5,17 +5,9 @@ import { getDeviceState } from "../../utils/deviceState";
 import styles from "../../styles/vehicleCardStyles";
 
 const VehicleCard = ({ id, dev, isSelected, onPress }) => {
-<<<<<<< HEAD
-  // ✅ Use speed (raw) first; fallback to lastKnownSpeed (if ever set)
   const speedKmh = Math.round(toKmh(dev.position?.speed ?? dev.position?.lastKnownSpeed ?? 0));
   const state = getDeviceState(dev);
 
-=======
-  // Pass the entire device object (including dev.online) to getDeviceState
-  const state = getDeviceState(dev);
-  const speedKmh = Math.round(toKmh(dev.position?.lastKnownSpeed));
-  
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   const getLastUpdate = () => {
     const time = dev?.position?.lastRealtimeUpdate || dev?.position?.deviceTime;
     if (!time) return "--";
@@ -53,8 +45,4 @@ const VehicleCard = ({ id, dev, isSelected, onPress }) => {
   );
 };
 
-<<<<<<< HEAD
-// Keep memo; extraData in FlatList ensures updates
-=======
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 export default React.memo(VehicleCard);

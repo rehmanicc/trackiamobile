@@ -1,20 +1,11 @@
 // src/screens/HistoryScreen.js
 import { useState, useEffect, useRef } from "react";
-<<<<<<< HEAD
 import { View, Text, TouchableOpacity, ActivityIndicator, Alert, Image } from "react-native";
 import MapView, { Polyline, Marker } from "react-native-maps";
 import { fetchDevices } from "../api/devices";
 import { getHistory } from "../api/traccar";
 import { useApi } from "../api/client";
 import { useRealtime } from "../contexts/RealtimeContext";
-=======
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
-import MapView, { Polyline } from "react-native-maps";
-import { fetchDevices } from "../api/devices";
-import { getHistory } from "../api/traccar";
-import { useApi } from "../api/client";
-import DeviceMarker from "../components/common/DeviceMarker";
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
 import PlaybackPickers from "../components/history/PlaybackPickers";
 import PlaybackPanel from "../components/history/PlaybackPanel";
 import HistoryVehicleCarousel from "../components/history/HistoryVehicleCarousel";
@@ -22,10 +13,7 @@ import useTripDetail from "../hooks/useTripDetail";
 import usePlayback from "../hooks/usePlayback";
 import styles from "../styles/historyStyles";
 
-<<<<<<< HEAD
-// ============================================================
-// DEDICATED HISTORY MARKER – separates history from live map
-// ============================================================
+// Dedicated History Marker – separates history from live map
 const HistoryMarker = ({ coordinate, rotation, playbackStatus }) => {
   if (!coordinate) return null;
   const icon = playbackStatus === "Stopped"
@@ -50,11 +38,6 @@ export default function HistoryScreen() {
   const mapRef = useRef(null);
   const { liveDevices } = useRealtime();
 
-=======
-export default function HistoryScreen() {
-  const api = useApi(); // temporary – can replace with direct imports later
-  const mapRef = useRef(null);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   const [devices, setDevices] = useState({});
   const [selectedDeviceId, setSelectedDeviceId] = useState(null);
   const [history, setHistory] = useState([]);
@@ -64,11 +47,7 @@ export default function HistoryScreen() {
   const [playbackMode, setPlaybackMode] = useState(null);
   const [playbackStarted, setPlaybackStarted] = useState(false);
   const [showPlaybackDate, setShowPlaybackDate] = useState(false);
-<<<<<<< HEAD
-  const [selectedDate, setSelectedDate] = useState(new Date()); // ✅ dedicated date state
-=======
-  const [playbackDate, setPlaybackDate] = useState(new Date());
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const {
     playbackIndex, setPlaybackIndex,
@@ -86,7 +65,6 @@ export default function HistoryScreen() {
     setTripLoading,
   });
 
-<<<<<<< HEAD
   // Reset playback engine and clear history, but NEVER change the date unless resetDate = true
   const resetPlayback = ({ resetDate = false } = {}) => {
     resetPlaybackEngine();
@@ -97,17 +75,6 @@ export default function HistoryScreen() {
     setShowPlaybackDate(false);
     if (resetDate) {
       setSelectedDate(new Date());
-=======
-  const resetPlayback = ({ full = false } = {}) => {
-    resetPlaybackEngine();
-    setHistory([]);
-    if (full) {
-      setPlaybackStarted(false);
-      setPlaybackMode(null);
-      setPlaybackDate(new Date());
-      setPlaybackLoading(false);
-      setShowPlaybackDate(false);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
     }
   };
 
@@ -116,11 +83,7 @@ export default function HistoryScreen() {
   }, []);
 
   useEffect(() => {
-<<<<<<< HEAD
     resetPlayback({ resetDate: true });
-=======
-    resetPlayback({ full: true });
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   }, [activeTab]);
 
   const loadDevices = async () => {
@@ -138,7 +101,6 @@ export default function HistoryScreen() {
     }
   };
 
-<<<<<<< HEAD
   const loadPlaybackHistory = async (fromDate, toDate, mode) => {
     if (!selectedDeviceId) return;
     setPlaybackLoading(true);
@@ -154,16 +116,6 @@ export default function HistoryScreen() {
           setPlaybackStarted(true);
         }
         Alert.alert("No Data", "No positions found for this date.");
-=======
-  const loadPlaybackHistory = async (fromDate, toDate) => {
-    if (!selectedDeviceId) return;
-    setPlaybackLoading(true);
-    try {
-      const res = await getHistory(selectedDeviceId, fromDate.toISOString(), toDate.toISOString());
-      const data = Array.isArray(res.data) ? res.data : [];
-      if (data.length === 0) {
-        setHistory([]);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
         return;
       }
       setHistory(data);
@@ -174,7 +126,6 @@ export default function HistoryScreen() {
         { duration: 800 }
       );
     } catch (err) {
-<<<<<<< HEAD
       console.error("❌ HISTORY ERROR:", err.message);
       if (mode !== "old") {
         resetPlayback({ resetDate: true });
@@ -182,9 +133,6 @@ export default function HistoryScreen() {
         setPlaybackStarted(true);
       }
       Alert.alert("Error", err.message || "Failed to load history. Please try again.");
-=======
-      console.log("❌ HISTORY ERROR:", err);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
     } finally {
       setPlaybackLoading(false);
     }
@@ -192,30 +140,18 @@ export default function HistoryScreen() {
 
   const handlePlaybackDate = async (selectedDate) => {
     if (!selectedDeviceId) return;
-<<<<<<< HEAD
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
     const day = selectedDate.getDate();
     const start = new Date(Date.UTC(year, month, day, 0, 0, 0));
     const end = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
-    setSelectedDate(selectedDate); // store the chosen date
+    setSelectedDate(selectedDate);
     setPlaybackMode("old");
     setPlaybackStarted(true);
     await loadPlaybackHistory(start, end, "old");
   };
 
   const showPlaybackMarker = activeTab === "playback" && currentPoint;
-=======
-    const start = new Date(selectedDate);
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(selectedDate);
-    end.setHours(23, 59, 59, 999);
-    setPlaybackMode("old");
-    setPlaybackStarted(true);
-    await loadPlaybackHistory(start, end);
-  };
-
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
   const hideCarousel = (activeTab === "playback" && history.length > 0) || (activeTab === "trip" && tripTab.tripData);
 
   return (
@@ -239,21 +175,13 @@ export default function HistoryScreen() {
                   onPress={async () => {
                     if (!selectedDeviceId) return;
                     setPlaybackMode("today");
-<<<<<<< HEAD
-                    resetPlayback(); // keep date
+                    resetPlayback();
                     const now = new Date();
                     const start = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0));
                     const end = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999));
                     setSelectedDate(now);
                     setPlaybackStarted(true);
                     await loadPlaybackHistory(start, end, "today");
-=======
-                    resetPlayback();
-                    const now = new Date();
-                    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
-                    setPlaybackStarted(true);
-                    await loadPlaybackHistory(start, now);
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
                   }}
                 >
                   <Text style={styles.modeText}>Today</Text>
@@ -262,10 +190,6 @@ export default function HistoryScreen() {
                   style={[styles.modeBtn, playbackMode === "old" && styles.activeMode]}
                   onPress={() => {
                     setPlaybackMode("old");
-<<<<<<< HEAD
-=======
-                    if (!playbackDate) setPlaybackDate(new Date());
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
                     setShowPlaybackDate(true);
                   }}
                 >
@@ -273,11 +197,7 @@ export default function HistoryScreen() {
                 </TouchableOpacity>
               </>
             ) : (
-<<<<<<< HEAD
               <TouchableOpacity style={styles.modeBtn} onPress={() => resetPlayback({ resetDate: true })}>
-=======
-              <TouchableOpacity style={styles.modeBtn} onPress={() => resetPlayback({ full: true })}>
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
                 <Text style={styles.modeText}>Cancel</Text>
               </TouchableOpacity>
             )}
@@ -299,22 +219,12 @@ export default function HistoryScreen() {
           />
         )}
         {activeTab === "trip" && tripTab.overlays}
-<<<<<<< HEAD
 
         {showPlaybackMarker && (
           <HistoryMarker
             coordinate={interpolatedCoord || { latitude: currentPoint.latitude, longitude: currentPoint.longitude }}
             rotation={markerRotation}
             playbackStatus={playbackStatus}
-=======
-        {activeTab === "playback" && currentPoint && (
-          <DeviceMarker
-            isPlayback={true}
-            playbackStatus={playbackStatus}
-            rotation={markerRotation}
-            position={currentPoint}
-            coordinate={interpolatedCoord || { latitude: currentPoint.latitude, longitude: currentPoint.longitude }}
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
           />
         )}
       </MapView>
@@ -337,7 +247,6 @@ export default function HistoryScreen() {
       )}
 
       {!hideCarousel && (
-<<<<<<< HEAD
         <HistoryVehicleCarousel
           styles={styles}
           devices={devices}
@@ -345,9 +254,6 @@ export default function HistoryScreen() {
           selectedDeviceId={selectedDeviceId}
           setSelectedDeviceId={setSelectedDeviceId}
         />
-=======
-        <HistoryVehicleCarousel styles={styles} devices={devices} selectedDeviceId={selectedDeviceId} setSelectedDeviceId={setSelectedDeviceId} />
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
       )}
 
       {activeTab === "playback" && history.length > 0 && (
@@ -368,15 +274,9 @@ export default function HistoryScreen() {
 
       <PlaybackPickers
         showPlaybackDate={showPlaybackDate}
-<<<<<<< HEAD
-        playbackDate={selectedDate} // Use selectedDate, not a separate state
+        playbackDate={selectedDate}
         setShowPlaybackDate={setShowPlaybackDate}
-        setPlaybackDate={setSelectedDate} // Update selectedDate when picker changes
-=======
-        playbackDate={playbackDate}
-        setShowPlaybackDate={setShowPlaybackDate}
-        setPlaybackDate={setPlaybackDate}
->>>>>>> 1fd94de4b6f1b2b73ad59d1fa8f561711b1895ec
+        setPlaybackDate={setSelectedDate}
         onSelectDate={handlePlaybackDate}
       />
 
